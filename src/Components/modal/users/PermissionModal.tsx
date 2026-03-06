@@ -1,4 +1,4 @@
-import { Modal, Checkbox, Input, Tag } from "antd";
+import { Modal, Checkbox, Input, Tag, Button } from "antd";
 import { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -46,12 +46,9 @@ const PermissionModal = ({
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([
     "Dashboard-View",
     "Orders-View",
+    "Orders-Create",
     "Orders-Update",
     "Orders-Delete",
-    "Incomplete Orders-View",
-    "Incomplete Orders-Create",
-    "Incomplete Orders-Update",
-    "Incomplete Orders-Delete",
   ]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -87,9 +84,31 @@ const PermissionModal = ({
     }
   };
 
+  const handleSelectAllBtn = () => {
+    const all = modules.flatMap((m) =>
+      m.permissions.map((p) => `${m.name}-${p}`),
+    );
+    setSelectedPermissions(all);
+  };
+
+  const handleClearAllBtn = () => {
+    setSelectedPermissions([]);
+  };
+
+  const handleGlobalToggle = (checked: boolean) => {
+    if (checked) handleSelectAllBtn();
+    else handleClearAllBtn();
+  };
+
   const filteredModules = modules.filter((m) =>
     m.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  const totalPermissionsCount = modules.reduce(
+    (acc, m) => acc + m.permissions.length,
+    0,
+  );
+  const isAllSelected = selectedPermissions.length === totalPermissionsCount;
 
   return (
     <Modal
@@ -98,71 +117,75 @@ const PermissionModal = ({
       onOk={onClose}
       width={1000}
       centered
+      closable={true}
+      footer={null}
       title={
         <div className="flex items-center justify-between pr-8 border-b border-gray-100 pb-4">
           <div>
             <h3 className="text-xl font-bold text-gray-800">
               Manage Permissions
             </h3>
-            <p className="text-sm text-gray-400 font-medium">
+            <p className="text-sm text-gray-400 font-medium tracking-tight">
               Configure access for {designationName}
             </p>
           </div>
           <Input
-            prefix={<SearchOutlined className="text-gray-300" />}
+            prefix={<SearchOutlined className="text-gray-400" />}
             placeholder="Search modules..."
-            className="w-72 rounded-lg bg-gray-50 border-gray-200"
+            className="w-80 h-10 rounded-lg bg-gray-50 border-gray-100 focus:bg-white transition-all"
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       }
-      closable={true}
-      footer={[
-        <div
-          key="footer"
-          className="flex justify-between items-center w-full px-4 py-2 mt-4 border-t border-gray-100"
-        >
-          <span className="text-sm font-semibold text-gray-500">
-            {selectedPermissions.length} / 223 selected
-          </span>
-          <div className="flex gap-3">
-            <button
-              onClick={() => {
-                /* Select All Logic */
-              }}
-              className="px-6 py-2 text-sm font-bold border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Select All
-            </button>
-            <button
-              onClick={() => setSelectedPermissions([])}
-              className="px-6 py-2 text-sm font-bold border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Clear All
-            </button>
-          </div>
-        </div>,
-      ]}
     >
-      <div className="pt-2">
-        <div className="flex items-center gap-2 mb-6 px-2">
-          <Checkbox className="text-gray-600 font-semibold text-sm">
+      <div className="pt-4">
+        {/* Action Bar */}
+        <div className="flex items-center justify-between mb-6 px-2">
+          <Checkbox
+            className="text-gray-600 font-bold text-sm tracking-tight"
+            checked={isAllSelected}
+            onChange={(e) => handleGlobalToggle(e.target.checked)}
+          >
             Select all permissions
           </Checkbox>
+          <div className="flex items-center gap-6">
+            <span className="text-sm font-bold text-gray-500 tracking-tight">
+              {selectedPermissions.length} / {totalPermissionsCount} selected
+            </span>
+            <div className="flex gap-2">
+              <Button
+                size="middle"
+                onClick={handleSelectAllBtn}
+                className="font-bold border-gray-200 text-gray-700 rounded-lg py-1.5 px-6 h-auto hover:bg-gray-50 transition-all border-2"
+              >
+                Select All
+              </Button>
+              <Button
+                size="middle"
+                onClick={handleClearAllBtn}
+                className="font-bold border-gray-200 text-gray-700 rounded-lg py-1.5 px-6 h-auto hover:bg-gray-50 transition-all border-2"
+              >
+                Clear All
+              </Button>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto px-2 custom-scrollbar">
+        {/* Content Grid */}
+        <div className="grid grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar pb-6 px-1">
           {filteredModules.map((module) => (
             <div
               key={module.name}
-              className="border border-gray-100 rounded-xl p-4 bg-white hover:shadow-sm transition-shadow"
+              className="border border-gray-100 rounded-2xl p-5 bg-white hover:border-emerald-100 hover:shadow-sm transition-all duration-300"
             >
-              <div className="flex justify-between items-center mb-4">
-                <h4 className="font-bold text-gray-800">{module.name}</h4>
+              <div className="flex justify-between items-center mb-5">
+                <h4 className="font-extrabold text-gray-800 text-sm uppercase tracking-wider">
+                  {module.name}
+                </h4>
                 <Checkbox
                   checked={isModuleSelected(module.name)}
                   onChange={() => toggleModule(module.name)}
-                  className="custom-checkbox h-5 w-5"
+                  className="custom-checkbox h-5 w-5 scale-125"
                 />
               </div>
               <div className="flex flex-wrap gap-2">
@@ -172,21 +195,43 @@ const PermissionModal = ({
                   return (
                     <Tag
                       key={perm}
-                      className={`cursor-pointer px-4 py-1.5 rounded-md border-0 text-xs font-semibold transition-all ${
+                      className={`cursor-pointer px-4 pt-1.5 pb-2 rounded-lg border-0 text-xs font-bold transition-all duration-200 ${
                         isSelected
-                          ? "bg-emerald-600 text-white shadow-md shadow-emerald-100"
-                          : "bg-gray-100 text-gray-400 hover:bg-gray-200"
+                          ? "bg-emerald-600 text-white shadow-md shadow-emerald-50"
+                          : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
                       }`}
                       onClick={() => togglePermission(permId)}
                     >
-                      {perm.charAt(0) +
-                        perm.slice(1).toLowerCase().replace("_", " ")}
+                      {perm
+                        .replace(/_/g, " ")
+                        .split(" ")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() + word.slice(1),
+                        )
+                        .join(" ")}
                     </Tag>
                   );
                 })}
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Final Save Button Section (Optional but usually needed) */}
+        <div className="flex justify-end gap-3 pt-6 border-t border-gray-100 px-2">
+          <Button
+            onClick={onClose}
+            className="px-8 h-12 rounded-xl font-bold border-2 text-gray-600 hover:bg-gray-50 transition-all"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={onClose}
+            className="px-10 h-12 rounded-xl font-bold bg-emerald-700 text-white hover:bg-emerald-800 transition-all shadow-lg shadow-emerald-100 border-0"
+          >
+            Save Permissions
+          </Button>
         </div>
       </div>
     </Modal>
