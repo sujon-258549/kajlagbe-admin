@@ -164,7 +164,8 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
                       isExpanded || isAnySubActive
                         ? "bg-[#e6f4ea] text-[#052e16]"
                         : "hover:bg-gray-50 text-gray-500"
-                    } rounded-lg px-4 py-3`}
+                    } rounded-sm
+                    ${isExpanded || isAnySubActive ? "border-l-4 border-l-primary" : ""} px-4 py-3`}
                   >
                     <div className="flex items-center">
                       <div
@@ -198,7 +199,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
                       />
                     )}
                     {!isOpen && (
-                      <div className="absolute left-full ml-4 px-3 py-2 bg-slate-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-bold z-50 whitespace-nowrap">
+                      <div className="absolute left-full ml-4 px-3 py-2 bg-slate-800 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-bold z-50 whitespace-nowrap">
                         {item.name}
                       </div>
                     )}
@@ -211,7 +212,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
                         isActive
                           ? "bg-[#e6f4ea] text-[#052e16]"
                           : "hover:bg-gray-50 text-gray-500"
-                      } rounded-xl px-4 py-3`
+                      } rounded-sm px-4 py-3`
                     }
                   >
                     <div className="flex items-center">
@@ -232,7 +233,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
                       </span>
                     </div>
                     {!isOpen && (
-                      <div className="absolute left-full ml-4 px-3 py-2 bg-slate-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-bold z-50 whitespace-nowrap">
+                      <div className="absolute left-full ml-4 px-3 py-2 bg-slate-800 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-bold z-50 whitespace-nowrap">
                         {item.name}
                       </div>
                     )}
@@ -248,13 +249,13 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
                         : "grid-rows-[0fr] opacity-0 mt-0"
                     }`}
                   >
-                    <div className="overflow-hidden ml-9 space-y-1">
+                    <div className="overflow-hidden ml-6 pl-4 border-l border-gray-100 space-y-1 my-1">
                       {item.submenu.map((sub) => (
                         <NavLink
                           key={sub.name}
                           to={sub.path}
                           className={({ isActive }) =>
-                            `block w-full text-left px-4 py-2 text-xs font-medium rounded-lg transition-all ${
+                            `block w-full text-left px-4 py-2 text-xs font-medium rounded-sm transition-all ${
                               isActive
                                 ? "text-primary bg-emerald-50"
                                 : "text-gray-500 hover:text-primary hover:bg-gray-50"
@@ -274,7 +275,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
 
         {/* Footer Section */}
         <div className="p-4 border-t border-gray-200">
-          <button className="w-full flex items-center transition-all duration-200 group relative hover:bg-rose-50 text-rose-500 rounded-xl px-4 py-3">
+          <button className="w-full flex items-center transition-all duration-200 group relative hover:bg-rose-50 text-rose-500 rounded-sm px-4 py-3">
             <div className="flex items-center">
               <div className="w-5 flex justify-center transition-transform duration-300 group-hover:scale-110 shrink-0">
                 <FontAwesomeIcon
@@ -293,7 +294,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
               </span>
             </div>
             {!isOpen && (
-              <div className="absolute left-full ml-4 px-3 py-2 bg-slate-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-bold z-50 whitespace-nowrap">
+              <div className="absolute left-full ml-4 px-3 py-2 bg-slate-800 text-white text-xs rounded-sm opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-bold z-50 whitespace-nowrap">
                 Logout
               </div>
             )}
