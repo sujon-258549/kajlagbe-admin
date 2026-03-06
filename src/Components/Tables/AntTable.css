@@ -54,4 +54,19 @@
   right: -2px !important;
 }
 
-/* Print styles moved to src/styles/print.css */
+/* ===== Custom Button Hover Overrides ===== */
+
+/* outline variant: hover border + icon -> primary */
+.ant-btn.hover\:border-primary\!:hover,
+.ant-btn.hover\:border-primary\!:focus {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+/* danger-outline variant: hover -> darker red */
+.ant-btn.hover\:border-rose-600\!:hover,
+.ant-btn.hover\:border-rose-600\!:focus {
+  border-color: #e11d48 !important;
+  color: #e11d48 !important;
+  background-color: #fff1f2 !important;
+}

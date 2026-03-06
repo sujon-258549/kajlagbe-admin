@@ -1,8 +1,14 @@
 import { Button as AntButton, type ButtonProps as AntButtonProps } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
-type ButtonSize = "sm" | "md" | "lg" | "icon";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "danger-outline";
+type ButtonSize = "sm" | "md" | "lg" | "icon" | "icon-sm";
 
 interface CustomButtonProps extends Omit<AntButtonProps, "size" | "variant"> {
   variant?: ButtonVariant;
@@ -10,40 +16,103 @@ interface CustomButtonProps extends Omit<AntButtonProps, "size" | "variant"> {
   className?: string;
 }
 
+// Default (non-hover) inline styles per variant
+const variantDefaultStyle: Record<ButtonVariant, React.CSSProperties> = {
+  primary: {
+    backgroundColor: "#052e16",
+    borderColor: "#052e16",
+    color: "#fff",
+  },
+  secondary: {
+    backgroundColor: "#ff7f00",
+    borderColor: "#ff7f00",
+    color: "#fff",
+  },
+  outline: {
+    backgroundColor: "transparent",
+    borderColor: "#d1d5db",
+    color: "#4b5563",
+  },
+  ghost: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    color: "#6b7280",
+  },
+  danger: { backgroundColor: "#f43f5e", borderColor: "#f43f5e", color: "#fff" },
+  "danger-outline": {
+    backgroundColor: "transparent",
+    borderColor: "#d1d5db",
+    color: "#4b5563",
+  },
+};
+
+// Hover inline styles per variant
+const variantHoverStyle: Record<ButtonVariant, React.CSSProperties> = {
+  primary: {
+    backgroundColor: "#041f0e",
+    borderColor: "#041f0e",
+    color: "#fff",
+  },
+  secondary: {
+    backgroundColor: "#e67300",
+    borderColor: "#e67300",
+    color: "#fff",
+  },
+  outline: {
+    backgroundColor: "transparent",
+    borderColor: "#052e16",
+    color: "#052e16",
+  },
+  ghost: {
+    backgroundColor: "#f9fafb",
+    borderColor: "transparent",
+    color: "#374151",
+  },
+  danger: { backgroundColor: "#e11d48", borderColor: "#e11d48", color: "#fff" },
+  "danger-outline": {
+    backgroundColor: "transparent",
+    borderColor: "#f43f5e",
+    color: "#f43f5e",
+  },
+};
+
+const sizeClasses: Record<ButtonSize, string> = {
+  sm: "px-3 py-1.5 text-xs rounded-sm h-8",
+  md: "px-4 py-2 text-sm rounded-sm h-10",
+  lg: "px-6 py-3 text-base rounded-sm h-12",
+  icon: "w-11 h-11 rounded-sm",
+  "icon-sm": "w-8 h-8 rounded-sm",
+};
+
 const Button: React.FC<CustomButtonProps> = ({
   variant = "primary",
   size = "md",
   className = "",
   children,
+  style,
   ...props
 }) => {
-  // Base classes for our custom button
+  const [isHovered, setIsHovered] = useState(false);
+
   const baseClasses =
     "transition-all font-medium flex items-center justify-center border-solid";
 
-  // Size logic
-  const sizeClasses = {
-    sm: "px-3 py-1.5 text-xs rounded-sm h-8",
-    md: "px-4 py-2 text-sm rounded-sm h-10",
-    lg: "px-6 py-3 text-base rounded-sm h-12",
-    icon: "w-11 h-11 rounded-sm", // specialized sizes for icon buttons
-  };
+  const combinedClasses = `${baseClasses} ${sizeClasses[size]} ${className}`;
 
-  // Variant logic
-  const variantClasses = {
-    primary: "bg-primary text-white border-primary hover:bg-primary/90",
-    secondary: "bg-secondary text-white border-secondary hover:bg-secondary/90",
-    outline:
-      "bg-transparent text-gray-700 border-gray-200 hover:bg-gray-50 hover:text-gray-900",
-    ghost:
-      "bg-transparent text-gray-500 border-transparent hover:bg-gray-50 hover:text-gray-700",
-    danger: "bg-rose-500 text-white border-rose-500 hover:bg-rose-600",
+  const computedStyle: React.CSSProperties = {
+    ...(isHovered ? variantHoverStyle[variant] : variantDefaultStyle[variant]),
+    transition: "all 0.2s ease",
+    ...style, // allow external style overrides
   };
-
-  const combinedClasses = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`;
 
   return (
-    <AntButton className={combinedClasses} {...props}>
+    <AntButton
+      className={combinedClasses}
+      style={computedStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      {...props}
+    >
       {children}
     </AntButton>
   );

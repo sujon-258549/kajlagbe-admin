@@ -1,5 +1,4 @@
 import { Menu } from "lucide-react";
-import { useState } from "react";
 import SearchInput from "../ui/SearchInput";
 import NotificationDropdown from "../dropdown/NotificationDropdown";
 import ProfileDropdown from "../dropdown/ProfileDropdown";
@@ -9,10 +8,6 @@ interface HeaderProps {
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
-  const [activeDropdown, setActiveDropdown] = useState<
-    "notif" | "profile" | null
-  >(null);
-
   const handleSearch = (value: string) => console.log(value);
 
   return (
@@ -36,8 +31,8 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 
       {/* Right: Actions */}
       <div className="flex items-center gap-4">
-        <NotificationDropdown onOpen={() => setActiveDropdown("notif")} />
-        <ProfileDropdown onOpen={() => setActiveDropdown("profile")} />
+        <NotificationDropdown />
+        <ProfileDropdown />
       </div>
     </header>
   );
