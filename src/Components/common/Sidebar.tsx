@@ -164,7 +164,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
                       isExpanded || isAnySubActive
                         ? "bg-[#e6f4ea] text-[#052e16]"
                         : "hover:bg-gray-50 text-gray-500"
-                    } rounded-xl px-4 py-3`}
+                    } rounded-lg px-4 py-3`}
                   >
                     <div className="flex items-center">
                       <div
