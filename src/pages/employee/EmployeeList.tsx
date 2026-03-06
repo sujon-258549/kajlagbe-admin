@@ -24,6 +24,7 @@ const mockEmployees: Employee[] = [
     phone: "+880 1711 000001",
     designation: "UI Designer",
     department: "Design",
+    role: "Admin",
     status: "Active",
   },
   {
@@ -33,6 +34,7 @@ const mockEmployees: Employee[] = [
     phone: "+880 1711 000002",
     designation: "Full Stack Developer",
     department: "Engineering",
+    role: "Employee",
     status: "Active",
   },
   {
@@ -42,6 +44,7 @@ const mockEmployees: Employee[] = [
     phone: "+880 1711 000003",
     designation: "QA Engineer",
     department: "Engineering",
+    role: "Employee",
     status: "Inactive",
   },
   {
@@ -51,6 +54,7 @@ const mockEmployees: Employee[] = [
     phone: "+880 1711 000004",
     designation: "HR Manager",
     department: "HR",
+    role: "Manager",
     status: "Active",
   },
   {
@@ -60,6 +64,7 @@ const mockEmployees: Employee[] = [
     phone: "+880 1711 000005",
     designation: "Product Manager",
     department: "Operations",
+    role: "Support",
     status: "Active",
   },
 ];
@@ -227,6 +232,16 @@ const EmployeeList = () => {
       ),
     },
     {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      render: (role: string) => (
+        <span className="text-sm text-gray-800 font-medium whitespace-nowrap">
+          {role}
+        </span>
+      ),
+    },
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",
@@ -307,6 +322,7 @@ const EmployeeList = () => {
                 { label: "Email", value: viewData.email },
                 { label: "Phone", value: viewData.phone },
                 { label: "Department", value: viewData.department },
+                { label: "Role", value: viewData.role },
                 { label: "Status", value: viewData.status },
               ].map(({ label, value }) => (
                 <div

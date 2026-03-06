@@ -1,8 +1,32 @@
 import { Input as AntInput, type InputProps } from "antd";
 import React from "react";
 
-const CustomInput: React.FC<InputProps> = ({ className = "", ...props }) => {
-  return <AntInput className={`rounded-lg ${className}`} {...props} />;
+interface CustomInputProps extends Omit<InputProps, "size"> {
+  size?: "sm" | "md" | "lg" | "small" | "middle" | "large";
+}
+
+const CustomInput: React.FC<CustomInputProps> = ({
+  className = "",
+  size,
+  ...props
+}) => {
+  // Map shorthand sizes to Ant Design sizes
+  const antSize =
+    size === "sm"
+      ? "small"
+      : size === "lg"
+        ? "large"
+        : size === "md"
+          ? "middle"
+          : size;
+
+  return (
+    <AntInput
+      className={`custom-input rounded-lg hover:border-primary! focus:border-primary! ${className}`}
+      size={antSize as any}
+      {...props}
+    />
+  );
 };
 
 export default CustomInput;

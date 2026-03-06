@@ -4,6 +4,9 @@ import Dashboard from "../Components/dashboard/Dashboard";
 import EmployeeList from "../pages/employee/EmployeeList";
 import NotFound from "../pages/error/NotFound";
 import ErrorPage from "../pages/error/ErrorPage";
+import RoleList from "../pages/users/RoleList";
+import RolesPermissions from "../pages/users/RolesPermissions";
+import DepartmentList from "../pages/users/DepartmentList";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,18 @@ const router = createBrowserRouter([
       {
         path: "employee/all",
         element: <EmployeeList />,
+      },
+      {
+        path: "users/roles",
+        element: <RoleList />,
+      },
+      {
+        path: "users/designations",
+        element: <RolesPermissions />,
+      },
+      {
+        path: "users/departments",
+        element: <DepartmentList />,
       },
       {
         path: "*",

@@ -364,6 +364,16 @@ input:focus {
   border-color: var(--primary) !important;
 }
 
-.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+/* Custom Select Overrides using .custom-select class */
+.custom-select:not(.ant-select-disabled):hover .ant-select-selector,
+.custom-select.ant-select-focused .ant-select-selector,
+.custom-select.ant-select-open .ant-select-selector {
   border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(5, 46, 22, 0.1) !important;
+  outline: 0 !important;
+}
+
+.custom-select .ant-select-selector , custom-select:hover .ant-select-selector {
+  transition: all 0.2s ease-in-out !important;
+  border-radius: 8px !important; /* Matches rounded-lg */
 }

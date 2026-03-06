@@ -33,7 +33,9 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       path: "/users",
       submenu: [
         { name: "All Employee", path: "/employee/all" },
-        { name: "Roles & Permissions", path: "/users/roles" },
+        { name: "Roles", path: "/users/roles" },
+        { name: "Designations", path: "/users/designations" },
+        { name: "Departments", path: "/users/departments" },
       ],
     },
     {

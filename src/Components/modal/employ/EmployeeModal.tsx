@@ -1,7 +1,11 @@
-import { Modal, Form, Select } from "antd";
+import { Modal, Form } from "antd";
 import { useEffect, useState } from "react";
 import CustomInput from "../../ui/Input";
 import CustomSwitch from "../../ui/Switch";
+import CustomSelect from "../../ui/Select";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 export interface Employee {
   _id: string;
@@ -10,6 +14,7 @@ export interface Employee {
   phone: string;
   designation: string;
   department: string;
+  role: string;
   status: "Active" | "Inactive";
 }
 
@@ -19,8 +24,6 @@ interface EmployeeModalProps {
   onSubmit: (values: Omit<Employee, "_id">) => void;
   editData?: Employee | null;
 }
-
-const { Option } = Select;
 
 const EmployeeModal = ({
   open,
@@ -87,56 +90,78 @@ const EmployeeModal = ({
           label="Full Name"
           rules={[{ required: true, message: "Please enter employee name" }]}
         >
-          <CustomInput placeholder="e.g. Sujon Ahmed" size="large" />
+          <CustomInput placeholder="e.g. Sujon Ahmed" size="md" />
         </Form.Item>
 
-        {/* Email */}
-        <Form.Item
-          name="email"
-          label="Email Address"
-          rules={[
-            { required: true, message: "Please enter email" },
-            { type: "email", message: "Enter a valid email" },
-          ]}
-        >
-          <CustomInput placeholder="e.g. sujon@example.com" size="large" />
-        </Form.Item>
+        <div className="grid grid-cols-2 gap-4">
+          {/* Email */}
+          <Form.Item
+            name="email"
+            label="Email Address"
+            rules={[
+              { required: true, message: "Please enter email" },
+              { type: "email", message: "Enter a valid email" },
+            ]}
+          >
+            <CustomInput placeholder="e.g. sujon@example.com" size="md" />
+          </Form.Item>
 
-        {/* Phone */}
-        <Form.Item
-          name="phone"
-          label="Phone Number"
-          rules={[{ required: true, message: "Please enter phone number" }]}
-        >
-          <CustomInput placeholder="e.g. +880 1234 567890" size="large" />
-        </Form.Item>
+          {/* Phone */}
+          <Form.Item
+            name="phone"
+            label="Phone Number"
+            rules={[{ required: true, message: "Please enter phone number" }]}
+          >
+            <CustomInput placeholder="e.g. +880 1234 567890" size="md" />
+          </Form.Item>
+        </div>
 
-        {/* Designation + Department */}
+        {/* Designation + Role */}
         <div className="grid grid-cols-2 gap-4">
           <Form.Item
             name="designation"
             label="Designation"
-            rules={[{ required: true, message: "Please enter designation" }]}
+            rules={[{ required: true, message: "Select designation" }]}
           >
-            <CustomInput placeholder="e.g. UI Designer" size="large" />
+            <CustomSelect placeholder="Select Designation" size="md">
+              <Option value="Software Engineer">Software Engineer</Option>
+              <Option value="UI/UX Designer">UI/UX Designer</Option>
+              <Option value="Product Manager">Product Manager</Option>
+              <Option value="Team Lead">Team Lead</Option>
+              <Option value="HR Manager">HR Manager</Option>
+            </CustomSelect>
           </Form.Item>
 
           <Form.Item
-            name="department"
-            label="Department"
-            rules={[{ required: true, message: "Select department" }]}
+            name="role"
+            label="User Role"
+            rules={[{ required: true, message: "Select user role" }]}
           >
-            <Select placeholder="Select" size="large">
-              <Option value="Engineering">Engineering</Option>
-              <Option value="Design">Design</Option>
-              <Option value="Marketing">Marketing</Option>
-              <Option value="HR">HR</Option>
-              <Option value="Finance">Finance</Option>
-              <Option value="Operations">Operations</Option>
-              <Option value="Sales">Sales</Option>
-            </Select>
+            <CustomSelect placeholder="Select Role" size="md">
+              <Option value="Admin">Admin</Option>
+              <Option value="Manager">Manager</Option>
+              <Option value="Employee">Employee</Option>
+              <Option value="Support">Support</Option>
+            </CustomSelect>
           </Form.Item>
         </div>
+
+        {/* Department */}
+        <Form.Item
+          name="department"
+          label="Department"
+          rules={[{ required: true, message: "Select department" }]}
+        >
+          <CustomSelect placeholder="Select Department" size="md">
+            <Option value="Engineering">Engineering</Option>
+            <Option value="Design">Design</Option>
+            <Option value="Marketing">Marketing</Option>
+            <Option value="HR">HR</Option>
+            <Option value="Finance">Finance</Option>
+            <Option value="Operations">Operations</Option>
+            <Option value="Sales">Sales</Option>
+          </CustomSelect>
+        </Form.Item>
 
         {/* Status — Switch Toggle */}
         <Form.Item label="Status">
