@@ -1,101 +1,3 @@
-// import { Table } from "antd";
-// import { useEffect, useState } from "react";
-// import { useSidebar } from "../../../context/SidebarContext";
-// import "./AntTable.css";
-
-// export default function DataTable(props: any) {
-//   const { isExpanded } = useSidebar();
-//   const {
-//     data,
-//     columns,
-//     rowKey,
-//     currentPage,
-//     setLimit,
-//     setCurrentPage,
-//     selectRow = false,
-//     isPaginate,
-//     showHeader,
-//     total,
-//     limit,
-//     loading = false,
-//     onSelectRowsChange,
-//     showSizeChanger = false,
-//     // add this sujon
-//     clearSelectionTrigger = false,
-//     expandable,
-//     ...rest // click details page jabe
-//   } = props;
-//   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-//   // change this clear select  sujon
-//   useEffect(() => {
-//     if (clearSelectionTrigger) {
-//       setSelectedRowKeys([]);
-//     }
-//   }, [clearSelectionTrigger]);
-
-//   // Handle row selection change
-//   const handleRowSelectionChange = (
-//     selectedRowKeys: any,
-//     selectedRows: any,
-//   ) => {
-//     setSelectedRowKeys(selectedRowKeys);
-//     if (onSelectRowsChange) {
-//       onSelectRowsChange(selectedRows);
-//     }
-//   };
-
-//   // rowSelection object for row selection features
-//   const rowSelection = {
-//     selectedRowKeys,
-//     onChange: handleRowSelectionChange,
-//     getCheckboxProps: (record: any) => {
-//       return { disabled: record.name === "Disabled User", name: record.name };
-//     },
-//   };
-
-//   return (
-//     <Table
-//       {...rest}
-//       loading={loading}
-//       className={`border rounded-lg ${
-//         isExpanded ? "sidebar-expanded" : "sidebar-collapsed"
-//       }`}
-//       rowKey={rowKey ? rowKey : "_id"}
-//       rowSelection={selectRow ? rowSelection : undefined}
-//       dataSource={data || []}
-//       columns={columns}
-//       tableLayout="fixed"
-//       scroll={{ x: true }}
-//       expandable={expandable}
-//       pagination={
-//         isPaginate
-//           ? {
-//               pageSize: limit || 20,
-//               total: total || data?.count || data?.length || 0,
-//               current: currentPage,
-//               // onChange: handlePageChange,
-//               onChange: (page) => {
-//                 // handlePageChange(page);
-//                 setCurrentPage(page);
-//               },
-//               showSizeChanger: showSizeChanger,
-//               pageSizeOptions: ["10", "25", "50", "100", "200", "500", "1000"],
-//               onShowSizeChange: (_current, newSize) => {
-//                 setLimit(newSize);
-//                 setCurrentPage(1);
-//               },
-//               showQuickJumper: true,
-//             }
-//           : false
-//       }
-//       showHeader={showHeader}
-//     />
-//   );
-// }
-
-// left to right side a onclick mouse norale tabel scorll  hobe
-
 import { Table } from "antd";
 import React, { useEffect, useState, useRef } from "react";
 import "./AntTable.css";
@@ -264,9 +166,7 @@ export default function DataTable(props: any) {
         {...rest}
         onRow={handleOnRow}
         loading={loading}
-        // className={`border rounded-lg shadow-none ${
-        //   isExpanded ? "sidebar-expanded" : "sidebar-collapsed"
-        // }`}
+        className="border border-gray-200 rounded-lg overflow-hidden shadow-none"
         rowKey={rowKey ? rowKey : "_id"}
         rowSelection={selectRow ? rowSelection : undefined}
         dataSource={data || []}

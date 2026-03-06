@@ -38,6 +38,8 @@
   background-color: #fff;
   width: 100%;
   overflow-x: auto;
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 8px; /* rounded-lg */
 }
 
 @media (min-width: 1024px) {
@@ -69,4 +71,43 @@
   border-color: #e11d48 !important;
   color: #e11d48 !important;
   background-color: #fff1f2 !important;
+}
+
+/* ===== Ant Design Pagination Overrides ===== */
+
+/* Active page item */
+.ant-pagination .ant-pagination-item-active {
+  border-color: var(--primary) !important;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: var(--primary) !important;
+}
+
+/* Hover on page items */
+.ant-pagination .ant-pagination-item:hover {
+  border-color: var(--primary) !important;
+}
+
+.ant-pagination .ant-pagination-item:hover a {
+  color: var(--primary) !important;
+}
+
+/* Hover on prev/next buttons */
+.ant-pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next:hover .ant-pagination-item-link {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+/* Jumpers and quick jumper input */
+.ant-pagination .ant-pagination-item-link:hover {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+.ant-pagination-options-quick-jumper input:focus {
+  border-color: var(--primary) !important;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(5, 46, 22, 0.1); /* light primary shadow */
 }

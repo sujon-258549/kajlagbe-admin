@@ -359,18 +359,11 @@
   border: 1px solid var(--primary);
 }
 
-/* ===== Ant Design Button Hover Overrides ===== */
-
-/* outline variant -> primary on hover */
-.ant-btn:hover.hover\:border-primary\!,
-.ant-btn:focus.hover\:border-primary\! {
+input:hover,
+input:focus {
   border-color: var(--primary) !important;
-  color: var(--primary) !important;
 }
 
-/* danger-outline variant -> red border + icon on hover */
-.ant-btn:hover.hover\:border-rose-500\!,
-.ant-btn:focus.hover\:border-rose-500\! {
-  border-color: #f43f5e !important;
-  color: #f43f5e !important;
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: var(--primary) !important;
 }

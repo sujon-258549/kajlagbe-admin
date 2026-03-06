@@ -1,5 +1,7 @@
-import { Modal, Form, Input, Select, Switch } from "antd";
+import { Modal, Form, Select } from "antd";
 import { useEffect, useState } from "react";
+import CustomInput from "../../ui/Input";
+import CustomSwitch from "../../ui/Switch";
 
 export interface Employee {
   _id: string;
@@ -61,7 +63,7 @@ const EmployeeModal = ({
       title={
         <div className="flex items-center gap-2 pb-2">
           <span className="text-base font-bold text-gray-900">
-            {isEdit ? "✏️ Update Employee" : "➕ Add New Employee"}
+            {isEdit ? " Update Employee" : "Add New Employee"}
           </span>
         </div>
       }
@@ -74,7 +76,7 @@ const EmployeeModal = ({
           fontWeight: 600,
         },
       }}
-      width={560}
+      width={660}
       centered
       destroyOnHidden
     >
@@ -85,7 +87,7 @@ const EmployeeModal = ({
           label="Full Name"
           rules={[{ required: true, message: "Please enter employee name" }]}
         >
-          <Input placeholder="e.g. Sujon Ahmed" size="large" />
+          <CustomInput placeholder="e.g. Sujon Ahmed" size="large" />
         </Form.Item>
 
         {/* Email */}
@@ -97,7 +99,7 @@ const EmployeeModal = ({
             { type: "email", message: "Enter a valid email" },
           ]}
         >
-          <Input placeholder="e.g. sujon@example.com" size="large" />
+          <CustomInput placeholder="e.g. sujon@example.com" size="large" />
         </Form.Item>
 
         {/* Phone */}
@@ -106,7 +108,7 @@ const EmployeeModal = ({
           label="Phone Number"
           rules={[{ required: true, message: "Please enter phone number" }]}
         >
-          <Input placeholder="e.g. +880 1234 567890" size="large" />
+          <CustomInput placeholder="e.g. +880 1234 567890" size="large" />
         </Form.Item>
 
         {/* Designation + Department */}
@@ -116,7 +118,7 @@ const EmployeeModal = ({
             label="Designation"
             rules={[{ required: true, message: "Please enter designation" }]}
           >
-            <Input placeholder="e.g. UI Designer" size="large" />
+            <CustomInput placeholder="e.g. UI Designer" size="large" />
           </Form.Item>
 
           <Form.Item
@@ -139,16 +141,15 @@ const EmployeeModal = ({
         {/* Status — Switch Toggle */}
         <Form.Item label="Status">
           <div className="flex items-center gap-3">
-            <Switch
+            <CustomSwitch
               checked={isActive}
               onChange={setIsActive}
-              style={{
-                backgroundColor: isActive ? "#052e16" : "#d1d5db",
-              }}
+              checkedChildren="Active"
+              unCheckedChildren="Inactive"
             />
             <span
               className={`text-sm font-semibold ${
-                isActive ? "text-emerald-600" : "text-gray-400"
+                isActive ? "text-primary" : "text-gray-400"
               }`}
             >
               {isActive ? "Active" : "Inactive"}

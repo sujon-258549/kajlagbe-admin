@@ -7,7 +7,9 @@ type ButtonVariant =
   | "outline"
   | "ghost"
   | "danger"
-  | "danger-outline";
+  | "danger-outline"
+  | "link"
+  | "dashed";
 type ButtonSize = "sm" | "md" | "lg" | "icon" | "icon-sm";
 
 interface CustomButtonProps extends Omit<AntButtonProps, "size" | "variant"> {
@@ -41,8 +43,21 @@ const variantDefaultStyle: Record<ButtonVariant, React.CSSProperties> = {
   danger: { backgroundColor: "#f43f5e", borderColor: "#f43f5e", color: "#fff" },
   "danger-outline": {
     backgroundColor: "transparent",
+    borderColor: "#f43f5e",
+    color: "#f43f5e",
+  },
+  link: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    color: "#052e16",
+    padding: 0,
+    height: "auto",
+  },
+  dashed: {
+    backgroundColor: "transparent",
     borderColor: "#d1d5db",
     color: "#4b5563",
+    borderStyle: "dashed",
   },
 };
 
@@ -70,9 +85,21 @@ const variantHoverStyle: Record<ButtonVariant, React.CSSProperties> = {
   },
   danger: { backgroundColor: "#e11d48", borderColor: "#e11d48", color: "#fff" },
   "danger-outline": {
+    backgroundColor: "#fff1f2",
+    borderColor: "#e11d48",
+    color: "#e11d48",
+  },
+  link: {
     backgroundColor: "transparent",
-    borderColor: "#f43f5e",
-    color: "#f43f5e",
+    borderColor: "transparent",
+    color: "#041f0e",
+    textDecoration: "underline",
+  },
+  dashed: {
+    backgroundColor: "transparent",
+    borderColor: "#052e16",
+    color: "#052e16",
+    borderStyle: "dashed",
   },
 };
 

@@ -12,6 +12,8 @@ import EmployeeModal, {
   type Employee,
 } from "../../Components/modal/employ/EmployeeModal";
 import CustomButton from "../../Components/ui/Button";
+import CustomSwitch from "../../Components/ui/Switch";
+import PageHeader from "../../Components/common/PageHeader";
 
 // Mock initial data
 const mockEmployees: Employee[] = [
@@ -83,6 +85,15 @@ const EmployeeList = () => {
   // Delete employee
   const handleDelete = (id: string) => {
     setEmployees((prev) => prev.filter((e) => e._id !== id));
+  };
+
+  // Change status toggle handler
+  const handleStatusChange = (id: string, checked: boolean) => {
+    setEmployees((prev) =>
+      prev.map((e) =>
+        e._id === id ? { ...e, status: checked ? "Active" : "Inactive" } : e,
+      ),
+    );
   };
 
   // Submit (create or update)
@@ -162,7 +173,9 @@ const EmployeeList = () => {
             alt={name}
             className="w-8 h-8 rounded-full object-cover shrink-0"
           />
-          <span className="font-semibold text-gray-800 text-sm">{name}</span>
+          <span className="font-semibold text-gray-800 text-sm whitespace-nowrap">
+            {name}
+          </span>
         </div>
       ),
     },
@@ -171,7 +184,7 @@ const EmployeeList = () => {
       dataIndex: "email",
       key: "email",
       render: (email: string) => (
-        <span className="text-sm text-gray-600">{email}</span>
+        <span className="text-sm text-gray-600 whitespace-nowrap">{email}</span>
       ),
     },
     {
@@ -179,7 +192,7 @@ const EmployeeList = () => {
       dataIndex: "phone",
       key: "phone",
       render: (phone: string) => (
-        <span className="text-sm text-gray-600">{phone}</span>
+        <span className="text-sm text-gray-600 whitespace-nowrap">{phone}</span>
       ),
     },
     {
@@ -187,7 +200,12 @@ const EmployeeList = () => {
       dataIndex: "designation",
       key: "designation",
       render: (d: string) => (
-        <span className="text-sm font-medium text-gray-700">{d}</span>
+        <span
+          className="text-xs font-semibold text-white whitespace-nowrap px-3 py-1 rounded-sm"
+          style={{ backgroundColor: "#052e16" }}
+        >
+          {d}
+        </span>
       ),
     },
     {
@@ -196,9 +214,13 @@ const EmployeeList = () => {
       key: "department",
       render: (dept: string) => (
         <Tag
-          color="blue"
-          bordered={false}
-          className="rounded-full px-3 font-medium"
+          style={{
+            backgroundColor: "#f0fdf4",
+            color: "#052e16",
+            border: "1px solid #dcfce7",
+            borderRadius: "4px",
+          }}
+          className=" px-3 font-medium"
         >
           {dept}
         </Tag>
@@ -208,14 +230,14 @@ const EmployeeList = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status: string) => (
-        <Tag
-          color={status === "Active" ? "green" : "orange"}
-          bordered={false}
-          className="rounded-full px-3 font-medium"
-        >
-          {status}
-        </Tag>
+      render: (status: string, record: Employee) => (
+        <CustomSwitch
+          checked={status === "Active"}
+          onChange={(checked) => handleStatusChange(record._id, checked)}
+          size="default"
+          checkedChildren="Active"
+          unCheckedChildren="Inactive"
+        />
       ),
     },
   ];
@@ -223,27 +245,24 @@ const EmployeeList = () => {
   return (
     <div className="space-y-5">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">
-            All Employees
-          </h2>
-          <p className="text-sm text-gray-500 mt-1">
-            Manage employee records, roles, and statuses
-          </p>
-        </div>
-        <CustomButton
-          onClick={handleCreate}
-          variant="outline"
-          size="sm"
-          icon={<FontAwesomeIcon icon={faPlus} />}
-        >
-          Add Employee
-        </CustomButton>
-      </div>
+      <PageHeader
+        breadcrumb={[{ label: "Home", path: "/" }, { label: "Employees" }]}
+        title="All Employees"
+        subTitle="Manage employee records, roles, and statuses"
+        extra={
+          <CustomButton
+            onClick={handleCreate}
+            variant="outline"
+            size="sm"
+            icon={<FontAwesomeIcon icon={faPlus} />}
+          >
+            Add Employee
+          </CustomButton>
+        }
+      />
 
       {/* Table Card */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-6">
+      <div className="">
         <DataTable
           data={employees}
           columns={columns}
