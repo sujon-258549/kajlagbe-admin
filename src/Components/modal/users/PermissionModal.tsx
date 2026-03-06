@@ -1,6 +1,9 @@
-import { Modal, Checkbox, Input, Tag, Button } from "antd";
+import { Modal } from "antd";
 import { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
+import CustomButton from "../../ui/Button";
+import CustomInput from "../../ui/Input";
+import CustomCheckbox from "../../ui/Checkbox";
 
 interface PermissionModalProps {
   open: boolean;
@@ -12,30 +15,8 @@ const modules = [
   { name: "Dashboard", permissions: ["View"] },
   { name: "Employees", permissions: ["View", "Create", "Update", "Delete"] },
   { name: "Designations", permissions: ["View", "Create", "Update", "Delete"] },
-  { name: "Orders", permissions: ["View", "Create", "Update", "Delete"] },
-  { name: "Inventory", permissions: ["View", "Create", "Update", "Delete"] },
-  {
-    name: "Incomplete Orders",
-    permissions: ["View", "Create", "Update", "Delete"],
-  },
-  {
-    name: "Completed Orders",
-    permissions: [
-      "View",
-      "Create",
-      "Update",
-      "Delete",
-      "View_all",
-      "View_pending",
-      "View_incomplete",
-      "View_no_response",
-      "View_good_but_no_response",
-      "View_advance_payment",
-      "View_hold",
-      "View_approved",
-      "View_cancelled",
-    ],
-  },
+  { name: "Permissions", permissions: ["View", "Create", "Update", "Delete"] },
+  { name: "Roles", permissions: ["View", "Create", "Update", "Delete"] },
 ];
 
 const PermissionModal = ({
@@ -45,10 +26,22 @@ const PermissionModal = ({
 }: PermissionModalProps) => {
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([
     "Dashboard-View",
-    "Orders-View",
-    "Orders-Create",
-    "Orders-Update",
-    "Orders-Delete",
+    "Employees-View",
+    "Employees-Create",
+    "Employees-Update",
+    "Employees-Delete",
+    "Designations-View",
+    "Designations-Create",
+    "Designations-Update",
+    "Designations-Delete",
+    "Permissions-View",
+    "Permissions-Create",
+    "Permissions-Update",
+    "Permissions-Delete",
+    "Roles-View",
+    "Roles-Create",
+    "Roles-Update",
+    "Roles-Delete",
   ]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -115,8 +108,9 @@ const PermissionModal = ({
       open={open}
       onCancel={onClose}
       onOk={onClose}
-      width={1000}
+      width={900}
       centered
+      
       closable={true}
       footer={null}
       title={
@@ -129,10 +123,11 @@ const PermissionModal = ({
               Configure access for {designationName}
             </p>
           </div>
-          <Input
+          <CustomInput
             prefix={<SearchOutlined className="text-gray-400" />}
             placeholder="Search modules..."
-            className="w-80 h-10 rounded-lg bg-gray-50 border-gray-100 focus:bg-white transition-all"
+            size="md"
+            className="max-w-xs"
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
@@ -141,32 +136,32 @@ const PermissionModal = ({
       <div className="pt-4">
         {/* Action Bar */}
         <div className="flex items-center justify-between mb-6 px-2">
-          <Checkbox
+          <CustomCheckbox
             className="text-gray-600 font-bold text-sm tracking-tight"
             checked={isAllSelected}
-            onChange={(e) => handleGlobalToggle(e.target.checked)}
+            onChange={(e: any) => handleGlobalToggle(e.target.checked)}
           >
             Select all permissions
-          </Checkbox>
+          </CustomCheckbox>
           <div className="flex items-center gap-6">
-            <span className="text-sm font-bold text-gray-500 tracking-tight">
+            <span className="text-sm font-semibold text-gray-400 tracking-tight">
               {selectedPermissions.length} / {totalPermissionsCount} selected
             </span>
             <div className="flex gap-2">
-              <Button
-                size="middle"
+              <CustomButton
+                size="sm"
+                variant="outline"
                 onClick={handleSelectAllBtn}
-                className="font-bold border-gray-200 text-gray-700 rounded-lg py-1.5 px-6 h-auto hover:bg-gray-50 transition-all border-2"
               >
                 Select All
-              </Button>
-              <Button
-                size="middle"
+              </CustomButton>
+              <CustomButton
+                size="sm"
+                variant="outline"
                 onClick={handleClearAllBtn}
-                className="font-bold border-gray-200 text-gray-700 rounded-lg py-1.5 px-6 h-auto hover:bg-gray-50 transition-all border-2"
               >
                 Clear All
-              </Button>
+              </CustomButton>
             </div>
           </div>
         </div>
@@ -176,16 +171,16 @@ const PermissionModal = ({
           {filteredModules.map((module) => (
             <div
               key={module.name}
-              className="border border-gray-100 rounded-2xl p-5 bg-white hover:border-emerald-100 hover:shadow-sm transition-all duration-300"
+              className="border border-primary/30 rounded-lg p-5 bg-white hover:border-primary hover:shadow-sm transition-all duration-300"
             >
               <div className="flex justify-between items-center mb-5">
-                <h4 className="font-extrabold text-gray-800 text-sm uppercase tracking-wider">
+                <h4 className="font-bold text-gray-800 text-sm uppercase tracking-wider">
                   {module.name}
                 </h4>
-                <Checkbox
+                <CustomCheckbox
                   checked={isModuleSelected(module.name)}
                   onChange={() => toggleModule(module.name)}
-                  className="custom-checkbox h-5 w-5 scale-125"
+                  className="h-5 w-5 scale-125"
                 />
               </div>
               <div className="flex flex-wrap gap-2">
@@ -193,24 +188,15 @@ const PermissionModal = ({
                   const permId = `${module.name}-${perm}`;
                   const isSelected = selectedPermissions.includes(permId);
                   return (
-                    <Tag
+                    <CustomButton
                       key={perm}
-                      className={`cursor-pointer px-4 pt-1.5 pb-2 rounded-lg border-0 text-xs font-bold transition-all duration-200 ${
-                        isSelected
-                          ? "bg-emerald-600 text-white shadow-md shadow-emerald-50"
-                          : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
-                      }`}
+                      size="sm"
+                      variant={isSelected ? "primary" : "outline"}
                       onClick={() => togglePermission(permId)}
+                      className={!isSelected ? "bg-gray-100! border-0!" : ""}
                     >
-                      {perm
-                        .replace(/_/g, " ")
-                        .split(" ")
-                        .map(
-                          (word) =>
-                            word.charAt(0).toUpperCase() + word.slice(1),
-                        )
-                        .join(" ")}
-                    </Tag>
+                      {perm}
+                    </CustomButton>
                   );
                 })}
               </div>
@@ -218,20 +204,14 @@ const PermissionModal = ({
           ))}
         </div>
 
-        {/* Final Save Button Section (Optional but usually needed) */}
+        {/* Final Save Button Section */}
         <div className="flex justify-end gap-3 pt-6 border-t border-gray-100 px-2">
-          <Button
-            onClick={onClose}
-            className="px-8 h-12 rounded-xl font-bold border-2 text-gray-600 hover:bg-gray-50 transition-all"
-          >
+          <CustomButton variant="outline" onClick={onClose}>
             Cancel
-          </Button>
-          <Button
-            onClick={onClose}
-            className="px-10 h-12 rounded-xl font-bold bg-emerald-700 text-white hover:bg-emerald-800 transition-all shadow-lg shadow-emerald-100 border-0"
-          >
+          </CustomButton>
+          <CustomButton variant="primary" onClick={onClose}>
             Save Permissions
-          </Button>
+          </CustomButton>
         </div>
       </div>
     </Modal>
