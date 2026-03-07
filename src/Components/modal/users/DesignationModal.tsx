@@ -1,9 +1,9 @@
-import { Modal, Form } from "antd";
+import { Modal, Form, Select } from "antd";
 import { useEffect, useState } from "react";
 import CustomInput from "../../ui/Input";
 import CustomSwitch from "../../ui/Switch";
 import CustomSelect from "../../ui/Select";
-import { Select } from "antd";
+import ModalHeader from "../../common/ModalHeader";
 
 const { Option } = Select;
 
@@ -47,16 +47,14 @@ const DesignationModal = ({
       onCancel={onClose}
       onOk={handleOk}
       title={
-        <div className="pb-2">
-          <h3 className="text-xl font-semibold text-[#1e293b]">
-            {editData ? "Update Designation" : "Create Designation"}
-          </h3>
-          <p className="text-gray-500 text-sm font-medium">
-            {editData
+        <ModalHeader
+          title={editData ? "Update Designation" : "Create Designation"}
+          subTitle={
+            editData
               ? "Edit the details of the designation."
-              : "Fill out the details to create a new designation."}
-          </p>
-        </div>
+              : "Fill out the details to create a new designation."
+          }
+        />
       }
       okText={editData ? "Update" : "Create"}
       cancelText="Cancel"

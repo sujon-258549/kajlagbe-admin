@@ -396,3 +396,8 @@ custom-select:hover .ant-select-selector {
   background-color: var(--primary) !important;
   border-color: var(--primary) !important;
 }
+
+textarea:hover,
+textarea:focus {
+  border-color: var(--primary) !important;
+}

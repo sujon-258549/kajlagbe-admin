@@ -4,6 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import CustomButton from "../../ui/Button";
 import CustomInput from "../../ui/Input";
 import CustomCheckbox from "../../ui/Checkbox";
+import ModalHeader from "../../common/ModalHeader";
 
 interface PermissionModalProps {
   open: boolean;
@@ -110,27 +111,23 @@ const PermissionModal = ({
       onOk={onClose}
       width={900}
       centered
-      
       closable={true}
       footer={null}
       title={
-        <div className="flex items-center justify-between pr-8 border-b border-gray-100 pb-4">
-          <div>
-            <h3 className="text-xl font-bold text-gray-800">
-              Manage Permissions
-            </h3>
-            <p className="text-sm text-gray-400 font-medium tracking-tight">
-              Configure access for {designationName}
-            </p>
-          </div>
-          <CustomInput
-            prefix={<SearchOutlined className="text-gray-400" />}
-            placeholder="Search modules..."
-            size="md"
-            className="max-w-xs"
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
+        <ModalHeader
+          title="Manage Permissions"
+          subTitle={`Configure access for ${designationName}`}
+          center={false}
+          extra={
+            <CustomInput
+              prefix={<SearchOutlined className="text-gray-400" />}
+              placeholder="Search modules..."
+              size="md"
+              className="max-w-xs"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          }
+        />
       }
     >
       <div className="pt-4">

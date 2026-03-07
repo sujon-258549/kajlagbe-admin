@@ -2,6 +2,7 @@ import { Modal, Form } from "antd";
 import { useEffect, useState } from "react";
 import CustomInput from "../../ui/Input";
 import CustomSwitch from "../../ui/Switch";
+import ModalHeader from "../../common/ModalHeader";
 
 interface RoleModalProps {
   open: boolean;
@@ -38,16 +39,14 @@ const RoleModal = ({ open, onClose, onSubmit, editData }: RoleModalProps) => {
       onCancel={onClose}
       onOk={handleOk}
       title={
-        <div className="pb-2 text-center">
-          <h3 className="text-xl font-semibold text-[#1e293b]">
-            {editData ? "Update Role" : "Create Role"}
-          </h3>
-          <p className="text-gray-500 text-sm font-medium">
-            {editData
+        <ModalHeader
+          title={editData ? "Update Role" : "Create Role"}
+          subTitle={
+            editData
               ? "Edit the details of the role."
-              : "Fill out the details to create a new role."}
-          </p>
-        </div>
+              : "Fill out the details to create a new role."
+          }
+        />
       }
       okText={editData ? "Update" : "Create"}
       cancelText="Cancel"

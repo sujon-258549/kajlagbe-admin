@@ -8,6 +8,9 @@ import RoleList from "../pages/users/RoleList";
 import RolesPermissions from "../pages/users/RolesPermissions";
 import DepartmentList from "../pages/users/DepartmentList";
 
+import CategoryList from "../pages/category/CategoryList";
+import SubCategoryList from "../pages/category/SubCategoryList";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +24,14 @@ const router = createBrowserRouter([
       {
         path: "employee/all",
         element: <EmployeeList />,
+      },
+      {
+        path: "category/list",
+        element: <CategoryList />,
+      },
+      {
+        path: "sub/category",
+        element: <SubCategoryList />,
       },
       {
         path: "users/roles",

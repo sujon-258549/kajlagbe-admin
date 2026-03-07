@@ -39,12 +39,12 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       ],
     },
     {
-      name: "Order Management",
+      name: "Category",
       icon: faBriefcase,
-      path: "/orders",
+      path: "/category",
       submenu: [
-        { name: "Order List", path: "/orders/list" },
-        { name: "Pending Orders", path: "/orders/pending" },
+        { name: "Category", path: "/category/list" },
+        { name: "SubCategory", path: "/sub/category" },
       ],
     },
     {

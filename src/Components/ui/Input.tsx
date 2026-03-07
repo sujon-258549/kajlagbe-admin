@@ -5,11 +5,9 @@ interface CustomInputProps extends Omit<InputProps, "size"> {
   size?: "sm" | "md" | "lg" | "small" | "middle" | "large";
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({
-  className = "",
-  size,
-  ...props
-}) => {
+const CustomInput: React.FC<CustomInputProps> & {
+  TextArea: typeof AntInput.TextArea;
+} = ({ className = "", size, ...props }) => {
   // Map shorthand sizes to Ant Design sizes
   const antSize =
     size === "sm"
@@ -28,5 +26,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
     />
   );
 };
+
+CustomInput.TextArea = AntInput.TextArea;
 
 export default CustomInput;

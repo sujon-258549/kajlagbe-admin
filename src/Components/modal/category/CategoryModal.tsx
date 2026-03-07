@@ -4,35 +4,35 @@ import CustomInput from "../../ui/Input";
 import CustomSwitch from "../../ui/Switch";
 import ModalHeader from "../../common/ModalHeader";
 
-interface DepartmentModalProps {
+interface CategoryModalProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (values: any) => void;
   editData?: any;
 }
 
-const DepartmentModal = ({
+const CategoryModal = ({
   open,
   onClose,
   onSubmit,
   editData,
-}: DepartmentModalProps) => {
+}: CategoryModalProps) => {
   const [form] = Form.useForm();
-  const [isActive, setIsActive] = useState(true);
+  const [status, setStatus] = useState(true);
 
   useEffect(() => {
     if (editData) {
       form.setFieldsValue(editData);
-      setIsActive(editData.status === "Active");
+      setStatus(editData.status);
     } else {
       form.resetFields();
-      setIsActive(true);
+      setStatus(true);
     }
   }, [editData, form, open]);
 
   const handleOk = () => {
     form.validateFields().then((values) => {
-      onSubmit({ ...values, status: isActive ? "Active" : "Inactive" });
+      onSubmit({ ...values, status });
       form.resetFields();
       onClose();
     });
@@ -45,11 +45,11 @@ const DepartmentModal = ({
       onOk={handleOk}
       title={
         <ModalHeader
-          title={editData ? "Update Department" : "Create Department"}
+          title={editData ? "Update Category" : "Create Category"}
           subTitle={
             editData
-              ? "Edit the details of the department."
-              : "Fill out the details to create a new department."
+              ? "Edit the details of the category."
+              : "Fill out the details to create a new category."
           }
         />
       }
@@ -61,18 +61,46 @@ const DepartmentModal = ({
       cancelButtonProps={{
         className: "!rounded-lg !font-semibold",
       }}
-      width={480}
+      width={680}
       centered
     >
       <Form form={form} layout="vertical" className="pt-4">
         <Form.Item
           name="name"
           label={
-            <span className="font-semibold text-gray-700">Department Name</span>
+            <span className="font-semibold text-gray-700">Category Name</span>
           }
-          rules={[{ required: true, message: "Please enter department name" }]}
+          rules={[{ required: true, message: "Please enter category name" }]}
         >
-          <CustomInput placeholder="e.g., Engineering, Marketing" size="md" />
+          <CustomInput placeholder="e.g., Technology, Healthcare" size="md" />
+        </Form.Item>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Form.Item
+            name="slug"
+            label={<span className="font-semibold text-gray-700">Slug</span>}
+            rules={[{ required: true, message: "Please enter slug" }]}
+          >
+            <CustomInput placeholder="e.g., technology" size="md" />
+          </Form.Item>
+
+          <Form.Item
+            name="icon"
+            label={<span className="font-semibold text-gray-700">Icon</span>}
+          >
+            <CustomInput placeholder="e.g., briefcase" size="md" />
+          </Form.Item>
+        </div>
+        <Form.Item
+          name="description"
+          label={
+            <span className="font-semibold text-gray-700">Description</span>
+          }
+        >
+          <CustomInput.TextArea
+            placeholder="Enter category description"
+            rows={3}
+          />
         </Form.Item>
 
         <Form.Item
@@ -80,8 +108,8 @@ const DepartmentModal = ({
         >
           <div className="flex items-center gap-3">
             <CustomSwitch
-              checked={isActive}
-              onChange={setIsActive}
+              checked={status}
+              onChange={setStatus}
               checkedChildren="Active"
               unCheckedChildren="Inactive"
               size="default"
@@ -93,4 +121,4 @@ const DepartmentModal = ({
   );
 };
 
-export default DepartmentModal;
+export default CategoryModal;

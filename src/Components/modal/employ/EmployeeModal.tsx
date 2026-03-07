@@ -1,9 +1,9 @@
-import { Modal, Form } from "antd";
+import { Modal, Form, Select } from "antd";
 import { useEffect, useState } from "react";
 import CustomInput from "../../ui/Input";
 import CustomSwitch from "../../ui/Switch";
 import CustomSelect from "../../ui/Select";
-import { Select } from "antd";
+import ModalHeader from "../../common/ModalHeader";
 
 const { Option } = Select;
 
@@ -64,11 +64,15 @@ const EmployeeModal = ({
       onCancel={handleCancel}
       onOk={handleOk}
       title={
-        <div className="flex items-center gap-2 pb-2">
-          <span className="text-base font-bold text-gray-900">
-            {isEdit ? " Update Employee" : "Add New Employee"}
-          </span>
-        </div>
+        <ModalHeader
+          title={isEdit ? "Update Employee" : "Add New Employee"}
+          subTitle={
+            isEdit
+              ? "Edit the details of the employee."
+              : "Fill out the details to create a new employee."
+          }
+          center={false}
+        />
       }
       okText={isEdit ? "Update" : "Create"}
       cancelText="Cancel"
