@@ -11,6 +11,7 @@ import DepartmentList from "../pages/users/DepartmentList";
 import CategoryList from "../pages/category/CategoryList";
 import SubCategoryList from "../pages/category/SubCategoryList";
 import SubscriptionList from "../pages/subscription/SubscriptionList";
+import JobList from "../pages/job/JobList";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "subscription",
         element: <SubscriptionList />,
+      },
+      {
+        path: "job/list",
+        element: <JobList />,
       },
       {
         path: "*",

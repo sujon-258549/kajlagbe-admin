@@ -15,9 +15,22 @@ interface PermissionModalProps {
 const modules = [
   { name: "Dashboard", permissions: ["View"] },
   { name: "Employees", permissions: ["View", "Create", "Update", "Delete"] },
+  { name: "Departments", permissions: ["View", "Create", "Update", "Delete"] },
   { name: "Designations", permissions: ["View", "Create", "Update", "Delete"] },
-  { name: "Permissions", permissions: ["View", "Create", "Update", "Delete"] },
   { name: "Roles", permissions: ["View", "Create", "Update", "Delete"] },
+  { name: "Permissions", permissions: ["View", "Create", "Update", "Delete"] },
+  { name: "Categories", permissions: ["View", "Create", "Update", "Delete"] },
+  {
+    name: "SubCategories",
+    permissions: ["View", "Create", "Update", "Delete"],
+  },
+  { name: "Subscription", permissions: ["View", "Create", "Update", "Delete"] },
+  {
+    name: "Job Management",
+    permissions: ["View", "Create", "Update", "Delete"],
+  },
+  { name: "Apply Job", permissions: ["View", "Create", "Update", "Delete"] },
+  { name: "Settings", permissions: ["View", "Update"] },
 ];
 
 const PermissionModal = ({
@@ -25,25 +38,9 @@ const PermissionModal = ({
   onClose,
   designationName,
 }: PermissionModalProps) => {
-  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([
-    "Dashboard-View",
-    "Employees-View",
-    "Employees-Create",
-    "Employees-Update",
-    "Employees-Delete",
-    "Designations-View",
-    "Designations-Create",
-    "Designations-Update",
-    "Designations-Delete",
-    "Permissions-View",
-    "Permissions-Create",
-    "Permissions-Update",
-    "Permissions-Delete",
-    "Roles-View",
-    "Roles-Create",
-    "Roles-Update",
-    "Roles-Delete",
-  ]);
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>(() =>
+    modules.flatMap((m) => m.permissions.map((p) => `${m.name}-${p}`)),
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   const togglePermission = (permId: string) => {
