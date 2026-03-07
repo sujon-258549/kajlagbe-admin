@@ -53,9 +53,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       icon: faBuilding,
       path: "/job",
       submenu: [
-        { name: "Job List", path: "/job/list" },
-        { name: "Job Categories", path: "/job/categories" },
-      ],
+        { name: "Job List", path: "/job/list" }      ],
     },
     {
       name: "Subscription",

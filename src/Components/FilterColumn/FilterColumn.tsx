@@ -1,6 +1,7 @@
 import { ColumnHeightOutlined, DownOutlined } from "@ant-design/icons";
-import { Card, Checkbox, Dropdown } from "antd";
+import { Card, Dropdown } from "antd";
 import { useEffect, useState } from "react";
+import CustomCheckbox from "../ui/Checkbox";
 import Button from "../ui/Button";
 
 interface Column {
@@ -72,7 +73,7 @@ const FilterColumn: React.FC<ColumnFilterProps> = ({
     <Card className="p-4 w-56">
       <div className="flex flex-col gap-2">
         {/* Select All */}
-        <Checkbox
+        <CustomCheckbox
           checked={selectedKeys.length === columns.length}
           indeterminate={
             selectedKeys.length > 0 && selectedKeys.length < columns.length
@@ -80,14 +81,13 @@ const FilterColumn: React.FC<ColumnFilterProps> = ({
           onChange={(e) =>
             handleChange(e.target.checked ? columns.map((col) => col.key) : [])
           }
-          style={{ accentColor: "green" }}
         >
           Select All
-        </Checkbox>
+        </CustomCheckbox>
 
         {/* Individual columns */}
         {columns.map((col) => (
-          <Checkbox
+          <CustomCheckbox
             key={col.key}
             checked={selectedKeys.includes(col.key)}
             onChange={(e) =>
@@ -97,10 +97,9 @@ const FilterColumn: React.FC<ColumnFilterProps> = ({
                   : selectedKeys.filter((k) => k !== col.key),
               )
             }
-            style={{ accentColor: "green" }}
           >
             {col.title}
-          </Checkbox>
+          </CustomCheckbox>
         ))}
       </div>
     </Card>

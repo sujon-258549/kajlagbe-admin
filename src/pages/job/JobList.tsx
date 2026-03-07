@@ -18,6 +18,7 @@ import CustomButton from "../../Components/ui/Button";
 import DataTable from "../../Components/Tables/DataTable";
 import CustomSwitch from "../../Components/ui/Switch";
 import JobModal, { type Job } from "../../Components/modal/job/JobModal";
+import FilterColumn from "../../Components/FilterColumn/FilterColumn";
 
 // Mock Data
 const mockJobs: Job[] = [
@@ -99,10 +100,26 @@ const mockJobs: Job[] = [
   },
 ];
 
+// Column definitions used by FilterColumn (key must match column key in the columns array)
+const filterableColumns = [
+  { key: "action", title: "Action" },
+  { key: "title", title: "Job Title" },
+  { key: "company", title: "Company" },
+  { key: "type", title: "Type" },
+  { key: "category", title: "Category" },
+  { key: "salary", title: "Salary" },
+  { key: "skills", title: "Skills" },
+  { key: "deadline", title: "Deadline" },
+  { key: "status", title: "Status" },
+];
+
 const JobList = () => {
   const [jobs, setJobs] = useState<Job[]>(mockJobs);
   const [modalOpen, setModalOpen] = useState(false);
   const [editData, setEditData] = useState<Job | null>(null);
+  const [visibleColumnKeys, setVisibleColumnKeys] = useState<string[]>(
+    filterableColumns.map((c) => c.key),
+  );
 
   const handleCreate = () => {
     setEditData(null);
@@ -339,6 +356,10 @@ const JobList = () => {
     },
   ];
 
+  const visibleColumns = columns.filter((col) =>
+    visibleColumnKeys.includes(col.key as string),
+  );
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -371,9 +392,18 @@ const JobList = () => {
       />
 
       <div>
+        {/* Toolbar */}
+        <div className="flex justify-end mb-3">
+          <FilterColumn
+            tableName="job_list"
+            columns={filterableColumns}
+            onChangeSelectedKeys={setVisibleColumnKeys}
+          />
+        </div>
+
         <DataTable
           data={jobs}
-          columns={columns}
+          columns={visibleColumns}
           isPaginate={true}
           showHeader={true}
           rowKey="id"
