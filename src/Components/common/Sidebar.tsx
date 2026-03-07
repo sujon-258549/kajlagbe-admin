@@ -12,6 +12,7 @@ import {
   faBars,
   faTimes,
   faChevronDown,
+  faTasksAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from "react-router";
@@ -48,21 +49,26 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
       ],
     },
     {
-      name: "Product Management",
+      name: "Job Management",
       icon: faBuilding,
-      path: "/products",
+      path: "/job",
       submenu: [
-        { name: "Product List", path: "/products/list" },
-        { name: "Categories", path: "/products/categories" },
+        { name: "Job List", path: "/job/list" },
+        { name: "Job Categories", path: "/job/categories" },
       ],
     },
     {
-      name: "Materials",
+      name: "Subscription",
+      icon: faTasksAlt,
+      path: "/subscription",
+    },
+    {
+      name: "Apply Job",
       icon: faToolbox,
-      path: "/materials",
+      path: "/apply-job",
       submenu: [
-        { name: "Inventory", path: "/materials/inventory" },
-        { name: "Suppliers", path: "/materials/suppliers" },
+        { name: "Apply Job List", path: "/apply-job/list" },
+        { name: "Apply Job Categories", path: "/apply-job/categories" },
       ],
     },
     {
