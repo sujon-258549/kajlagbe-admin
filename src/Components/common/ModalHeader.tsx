@@ -15,12 +15,12 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({
 }) => {
   return (
     <div
-      className={`pb-2 flex items-center w-full ${
-        center ? "justify-center text-center" : "justify-between"
+      className={`pb-2 flex w-full ${
+        center ? "" : ""
       }`}
     >
-      <div className={center ? "flex flex-col items-center" : ""}>
-        <h3 className="text-xl font-bold text-[#1e293b]">{title}</h3>
+      <div className={center ? "flex flex-col" : ""}>
+        <h3 className="text-xl font-bold text-left   text-[#1e293b]">{title}</h3>
         {subTitle && (
           <p className="text-gray-500 text-sm font-medium">{subTitle}</p>
         )}

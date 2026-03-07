@@ -68,7 +68,8 @@ const SubCategoryModal = ({
       centered
     >
       <Form form={form} layout="vertical" className="pt-4">
-        <Form.Item
+        <div className="grid grid-cols-2 gap-4">
+          <Form.Item
           name="categoryId"
           label={
             <span className="font-semibold text-gray-700">Parent Category</span>
@@ -96,6 +97,7 @@ const SubCategoryModal = ({
             size="md"
           />
         </Form.Item>
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <Form.Item
