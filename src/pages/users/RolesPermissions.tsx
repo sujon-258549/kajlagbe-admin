@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PageHeader from "../../Components/common/PageHeader";
 import { Tooltip, Popconfirm } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -113,6 +113,54 @@ const RolesPermissions = () => {
 
   const designationColumns = [
     {
+      title: "ACTION",
+      key: "action",
+      width: 130,
+      render: (_: any, record: any) => (
+        <div className="flex items-center gap-2">
+          {/* Permissions */}
+          <Tooltip title="Manage Permissions">
+            <CustomButton
+              variant="outline"
+              size="icon-sm"
+              onClick={() => handleManagePermissions(record)}
+              icon={<FontAwesomeIcon icon={faShieldAlt} className="text-xs" />}
+            />
+          </Tooltip>
+
+          {/* Edit */}
+          <Tooltip title="Edit Designation">
+            <CustomButton
+              variant="outline"
+              size="icon-sm"
+              onClick={() => handleEdit(record)}
+              icon={
+                <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
+              }
+            />
+          </Tooltip>
+
+          {/* Delete */}
+          <Popconfirm
+            title="Delete Designation"
+            description="Are you sure you want to delete this designation?"
+            onConfirm={() => handleDelete(record._id)}
+            okText="Delete"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true }}
+          >
+            <Tooltip title="Delete Designation">
+              <CustomButton
+                variant="danger-outline"
+                size="icon-sm"
+                icon={<FontAwesomeIcon icon={faTrash} className="text-xs" />}
+              />
+            </Tooltip>
+          </Popconfirm>
+        </div>
+      ),
+    },
+    {
       title: (
         <div className="flex items-center justify-between">
           <span>NAME</span>
@@ -175,54 +223,6 @@ const RolesPermissions = () => {
       key: "createdAt",
       render: (date: string) => (
         <span className="text-gray-600 font-medium">{date}</span>
-      ),
-    },
-    {
-      title: "ACTION",
-      key: "action",
-      width: 150,
-      render: (_: any, record: any) => (
-        <div className="flex items-center gap-2">
-          {/* Permissions */}
-          <Tooltip title="Manage Permissions">
-            <CustomButton
-              variant="outline"
-              size="icon-sm"
-              onClick={() => handleManagePermissions(record)}
-              icon={<FontAwesomeIcon icon={faShieldAlt} className="text-xs" />}
-            />
-          </Tooltip>
-
-          {/* Edit */}
-          <Tooltip title="Edit Designation">
-            <CustomButton
-              variant="outline"
-              size="icon-sm"
-              onClick={() => handleEdit(record)}
-              icon={
-                <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
-              }
-            />
-          </Tooltip>
-
-          {/* Delete */}
-          <Popconfirm
-            title="Delete Designation"
-            description="Are you sure you want to delete this designation?"
-            onConfirm={() => handleDelete(record._id)}
-            okText="Delete"
-            cancelText="Cancel"
-            okButtonProps={{ danger: true }}
-          >
-            <Tooltip title="Delete">
-              <CustomButton
-                variant="danger-outline"
-                size="icon-sm"
-                icon={<FontAwesomeIcon icon={faTrash} className="text-xs" />}
-              />
-            </Tooltip>
-          </Popconfirm>
-        </div>
       ),
     },
   ];

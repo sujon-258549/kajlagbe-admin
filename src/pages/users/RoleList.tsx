@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PageHeader from "../../Components/common/PageHeader";
 import { Tooltip, Popconfirm } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -81,6 +81,44 @@ const RoleList = () => {
 
   const roleColumns = [
     {
+      title: "ACTION",
+      key: "action",
+      width: 110,
+      render: (_: any, record: any) => (
+        <div className="flex items-center gap-2">
+          {/* Edit */}
+          <Tooltip title="Edit Role">
+            <CustomButton
+              variant="outline"
+              size="icon-sm"
+              onClick={() => handleEdit(record)}
+              icon={
+                <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
+              }
+            />
+          </Tooltip>
+
+          {/* Delete */}
+          <Popconfirm
+            title="Delete Role"
+            description="Are you sure you want to delete this role?"
+            onConfirm={() => handleDelete(record._id)}
+            okText="Delete"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true }}
+          >
+            <Tooltip title="Delete Role">
+              <CustomButton
+                variant="danger-outline"
+                size="icon-sm"
+                icon={<FontAwesomeIcon icon={faTrash} className="text-xs" />}
+              />
+            </Tooltip>
+          </Popconfirm>
+        </div>
+      ),
+    },
+    {
       title: (
         <div className="flex items-center justify-between">
           <span>ROLE NAME</span>
@@ -123,44 +161,6 @@ const RoleList = () => {
       key: "createdAt",
       render: (date: string) => (
         <span className="text-gray-600 font-medium">{date}</span>
-      ),
-    },
-    {
-      title: "ACTION",
-      key: "action",
-      width: 150,
-      render: (_: any, record: any) => (
-        <div className="flex items-center gap-2">
-          {/* Edit */}
-          <Tooltip title="Edit Role">
-            <CustomButton
-              variant="outline"
-              size="icon-sm"
-              onClick={() => handleEdit(record)}
-              icon={
-                <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
-              }
-            />
-          </Tooltip>
-
-          {/* Delete */}
-          <Popconfirm
-            title="Delete Role"
-            description="Are you sure you want to delete this role?"
-            onConfirm={() => handleDelete(record._id)}
-            okText="Delete"
-            cancelText="Cancel"
-            okButtonProps={{ danger: true }}
-          >
-            <Tooltip title="Delete">
-              <CustomButton
-                variant="danger-outline"
-                size="icon-sm"
-                icon={<FontAwesomeIcon icon={faTrash} className="text-xs" />}
-              />
-            </Tooltip>
-          </Popconfirm>
-        </div>
       ),
     },
   ];

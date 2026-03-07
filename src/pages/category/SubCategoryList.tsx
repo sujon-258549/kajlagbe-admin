@@ -107,6 +107,44 @@ const SubCategoryList = () => {
 
   const columns = [
     {
+      title: "ACTION",
+      key: "action",
+      width: 110,
+      render: (_: any, record: any) => (
+        <div className="flex items-center gap-2">
+          {/* Edit */}
+          <Tooltip title="Edit SubCategory">
+            <CustomButton
+              variant="outline"
+              size="icon-sm"
+              onClick={() => handleEdit(record)}
+              icon={
+                <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
+              }
+            />
+          </Tooltip>
+
+          {/* Delete */}
+          <Popconfirm
+            title="Delete SubCategory"
+            description="Are you sure you want to delete this subcategory?"
+            onConfirm={() => handleDelete(record.id)}
+            okText="Delete"
+            cancelText="Cancel"
+            okButtonProps={{ danger: true }}
+          >
+            <Tooltip title="Delete SubCategory">
+              <CustomButton
+                variant="danger-outline"
+                size="icon-sm"
+                icon={<FontAwesomeIcon icon={faTrash} className="text-xs" />}
+              />
+            </Tooltip>
+          </Popconfirm>
+        </div>
+      ),
+    },
+    {
       title: (
         <div className="flex items-center justify-between">
           <span>SUBCATEGORY NAME</span>
@@ -171,44 +209,6 @@ const SubCategoryList = () => {
       key: "createdAt",
       render: (date: string) => (
         <span className="text-gray-600 font-medium">{date}</span>
-      ),
-    },
-    {
-      title: "ACTION",
-      key: "action",
-      width: 150,
-      render: (_: any, record: any) => (
-        <div className="flex items-center gap-2">
-          {/* Edit */}
-          <Tooltip title="Edit SubCategory">
-            <CustomButton
-              variant="outline"
-              size="icon-sm"
-              onClick={() => handleEdit(record)}
-              icon={
-                <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
-              }
-            />
-          </Tooltip>
-
-          {/* Delete */}
-          <Popconfirm
-            title="Delete SubCategory"
-            description="Are you sure you want to delete this subcategory?"
-            onConfirm={() => handleDelete(record.id)}
-            okText="Delete"
-            cancelText="Cancel"
-            okButtonProps={{ danger: true }}
-          >
-            <Tooltip title="Delete">
-              <CustomButton
-                variant="danger-outline"
-                size="icon-sm"
-                icon={<FontAwesomeIcon icon={faTrash} className="text-xs" />}
-              />
-            </Tooltip>
-          </Popconfirm>
-        </div>
       ),
     },
   ];
